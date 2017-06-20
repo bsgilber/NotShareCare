@@ -1,17 +1,32 @@
-from flask import Flask, render_template, json, request
+from flask import Flask, render_template, json, request, url_for
 from flask_googlemaps import GoogleMaps, Map, icons
+from flask_mail import Mail, Message
 from login.models import *
-from dashboard.content_management import Content
 
 app = Flask(__name__)
-GoogleMaps(app)
 app.config.from_object('config')
+
+GoogleMaps(app)
+mail=Mail(app)
 
 @app.errorhandler(404)
 def not_found(error):
 	return render_template('404.html'), 404
 
-@app.route("/", methods=['GET','POST'])
+@app.route("/response", methods=['POST','GET'])
+def email_response():
+	if request.method == 'POST':
+		# read the posted values from the UI
+		_name = request.form['name']
+		_email = request.form['email']
+                _message = request.form['message']
+
+		send_email(_name,_email,_message)
+
+	return render_template("email_confirm.html")
+
+
+@app.route("/", methods=['POST','GET'])
 def main():
 	sndmap = Map(
 		identifier="sndmap",
@@ -63,28 +78,14 @@ def main():
                            )
                 }
 		])
+
 	return render_template('index.html', sndmap=sndmap)
 
-@app.route("/dashboard/")
-def dashboard():
-	return render_template('dashboard.html', TOPIC_DICT=Content())
-
-@app.route('/login', methods=['POST','GET'])
-def signUp():
-	try:
-		# read the posted values from the UI
-		_name = request.form['inputName']
-		_email = request.form['inputEmail']
-		_password = request.form['inputPassword']
- 
-		# validate the received values
-		if _name and _email and _password:
-			newUser = UserModel(_name, _password, _email)
-			db.session.add(newUser)
-			db.session.commit()
-			return json.dumps({'html':'<span>All fields good !!</span>'})
-		else:
-			return json.dumps({'html':'<span>Enter the required fields</span>'})
-		
-	except Exception as e:
-		return json.dumps({'error':str(e)})
+def send_email(name, email, message):
+	msg = mail.send_message(
+		'You got email from an OAR user!',
+		sender='bsgilber@gmail.com',
+		recipients=['bsgilber@gmail.com'],
+		body="The user " + name + " emailed you with the message \"" + message + ".\" You can get in touch with them at " + email + "."
+		)
+	return
