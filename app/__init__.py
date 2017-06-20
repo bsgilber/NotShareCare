@@ -26,6 +26,14 @@ def email_response():
 	return render_template("email_confirm.html")
 
 
+@app.route("/signup", methods=['POST','GET'])
+def signUp():
+	return render_template("signup.html")
+
+@app.route("/learnmore", methods=['POST','GET'])
+def learnMore():
+	return render_template("learnmore.html")
+
 @app.route("/", methods=['POST','GET'])
 def main():
 	sndmap = Map(
