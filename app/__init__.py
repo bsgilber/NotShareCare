@@ -1,7 +1,6 @@
 from flask import Flask, render_template, json, request, url_for
 from flask_googlemaps import GoogleMaps, Map, icons
 from flask_mail import Mail, Message
-from login.models import *
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -16,10 +15,9 @@ def not_found(error):
 @app.route("/response", methods=['POST','GET'])
 def email_response():
 	if request.method == 'POST':
-		# read the posted values from the UI
 		_name = request.form['name']
 		_email = request.form['email']
-                _message = request.form['message']
+		_message = request.form['message']
 
 		send_email(_name,_email,_message)
 
@@ -34,6 +32,17 @@ def signUp():
 def learnMore():
 	return render_template("learnmore.html")
 
+@app.route("/launchdate", methods=['POST','GET'])
+def launchDate():
+	if request.method == 'POST':
+		_username = request.form['username']
+		_phone = request.form['phone']
+		_email = request.form['email']
+
+		send_email(_username, _email, _phone)
+
+	return render_template("launchdate.html")
+
 @app.route("/", methods=['POST','GET'])
 def main():
 	sndmap = Map(
@@ -43,6 +52,7 @@ def main():
         	zoom_control=False,
         	maptype_control=False,
         	scale_control=False,
+		scroll_control=False,
         	streetview_control=False,
 		markers=[
             	{
