@@ -8,10 +8,6 @@ app.config.from_object('config')
 GoogleMaps(app)
 mail=Mail(app)
 
-@app.errorhandler(404)
-def not_found(error):
-	return render_template('404.html'), 404
-
 @app.route("/response", methods=['POST','GET'])
 def email_response():
 	if request.method == 'POST':
@@ -59,7 +55,7 @@ def main():
                 'icon': icons.dots.blue,
                 'lat':  33.759123,
                 'lng':  -84.389980,
-                'infobox': ("<h3>Camping Bag: $5/day</h3>"
+                'infobox': ("<h3>-22F Sleeping Bag: $4/day</h3>"
 			    "<img src='static/images/sleepingbag.jpg' style='width:60px;height:60px;'>"
 			   )
             	},
