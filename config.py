@@ -35,3 +35,4 @@ MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
 # administrator list
 ADMINS = ['bsgilber@gmail.com']
+GOOGLEMAPS_KEY='AIzaSyAoupg5_QyJXKFQP4jTNAXHJf1-pEtHOxA'

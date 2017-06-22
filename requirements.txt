@@ -18,7 +18,6 @@ Mako==1.0.6
 MarkupSafe==1.0
 passlib==1.7.1
 psycopg2==2.7.1
-pygobject==3.20.0
 python-dateutil==2.6.0
 python-editor==1.0.3
 pytz==2017.2
@@ -26,6 +25,7 @@ requests==2.17.3
 six==1.10.0
 SQLAlchemy==1.1.10
 urllib3==1.21.1
+uWSGI==2.0.15
 virtualenv==15.1.0
 Werkzeug==0.12.2
 WTForms==2.1
