@@ -19,6 +19,9 @@ def email_response():
 
 	return render_template("email_confirm.html")
 
+@app.route("/mapview", methods=['POST','GET'])
+def mapView():
+	return render_template("mapview.html")
 
 @app.route("/signup", methods=['POST','GET'])
 def signUp():
@@ -45,6 +48,8 @@ def main():
 		identifier="sndmap",
 		lat=33.753746,
 		lng=-84.386330,
+		style="height:10px;width:10px;margin:0;",
+		scroll_wheel=False,
         	zoom_control=False,
         	maptype_control=False,
         	scale_control=False,
